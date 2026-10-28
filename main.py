@@ -7,6 +7,7 @@ menu = "0"
 #            Funções
 ##################################
 
+
 def criar_banco():
     cs.execute(f'''
                 CREATE TABLE IF NOT EXISTS Filmes (
@@ -20,18 +21,18 @@ def criar_banco():
     cx.commit()
     print("\nTabela criada com sucesso.")
 
+
 def adicionar_registro():
     nome = input("\nDigite o nome do filme:\n> ").title()
     while nome == "" or nome.isspace() == True:
         print("\nO nome precisa ser válido.")
         nome = input("\nDigite o nome do filme:\n> ").title()
-    
-    
+
     genero = input("\nDigite o gênero do filme:\n> ").capitalize()
     while genero == "" or genero.isspace() == True:
         print("\nO nome precisa ser válido.")
         genero = input("\nDigite o gênero do filme:\n> ").title()
-    
+
     duracao = ""
     while duracao == "":
         try:
@@ -40,12 +41,12 @@ def adicionar_registro():
         except ValueError:
             print("\nA duração do filme precisa ser um valor numérico.")
             duracao = ""
-    
+
     diretor = input("\nDigite o nome do diretor:\n> ")
     while diretor == "" or diretor.isspace() == True:
         print("\nO nome precisa ser válido.")
         diretor = input("\nDigite o diretor do filme:\n> ").title()
-    
+
     avaliacao = ""
     while avaliacao == "":
         try:
@@ -64,6 +65,7 @@ def adicionar_registro():
         print(
             f"\n\33[32mFilme {nome} foi inserido no banco de dados com sucesso.\33[0m\n")
 
+
 def atualizar_registro():
     print()
     print("Escolha o que deseja atualizar:")
@@ -77,6 +79,7 @@ def atualizar_registro():
         resultados = listar_filmes()
 
         if resultados != []:
+            print()
             for i in resultados:
                 print(f"ID: {i[0]} || Nome: {i[1]} || Gênero: {i[2]}")
 
@@ -87,8 +90,7 @@ def atualizar_registro():
                 except ValueError:
                     print("O ID precisa ser um valor numérico.")
 
-            genero = input(
-                f"\nDigite o novo gênero do filme:\n> ").capitalize()
+            genero = input(f"\nDigite o novo gênero do filme:\n> ").capitalize()
 
             if genero != "":
                 cs.execute(f'''
@@ -97,7 +99,7 @@ def atualizar_registro():
                 cx.commit()
 
                 print(
-                    f"\nO filme foi atualizado com o gênero '{genero}'\n")
+                    f"\n\33[32mO filme foi atualizado com o gênero '{genero}'\33[0m\n")
 
             else:
                 print("\nO campo não pode estar vazio.")
@@ -109,6 +111,7 @@ def atualizar_registro():
         resultados = listar_filmes()
 
         if resultados != []:
+            print()
             for i in resultados:
                 print(f"ID: {i[0]} || Nome: {i[1]} || Duração: {i[3]}")
 
@@ -119,8 +122,7 @@ def atualizar_registro():
                 except ValueError:
                     print("O ID precisa ser um valor numérico.")
 
-            duracao = input(
-                f"\nDigite a nova duração do filme:\n> ")
+            duracao = input(f"\nDigite a nova duração do filme:\n> ")
 
             if duracao != "":
                 cs.execute(f'''
@@ -128,8 +130,7 @@ def atualizar_registro():
                             ''')
                 cx.commit()
 
-                print(
-                    f"\nO filme foi atualizado com a duração: '{duracao}'\n")
+                print(f"\n\33[32mO filme foi atualizado com a duração: '{duracao}'\n\33[0m")
 
             else:
                 print("\nO campo não pode estar vazio.")
@@ -142,6 +143,7 @@ def atualizar_registro():
         resultados = listar_filmes()
 
         if resultados != []:
+            print()
             for i in resultados:
                 print(f"ID: {i[0]} || Nome: {i[1]} || Diretor: {i[4]}")
 
@@ -162,7 +164,7 @@ def atualizar_registro():
                 cx.commit()
 
                 print(
-                    f"\nO filme foi atualizado com o diretor: '{diretor}'\n")
+                    f"\n\33[32mO filme foi atualizado com o diretor: '{diretor}'\33[0m\n")
 
             else:
                 print("\nO campo não pode estar vazio.")
@@ -175,6 +177,7 @@ def atualizar_registro():
         resultados = listar_filmes()
 
         if resultados != []:
+            print()
             for i in resultados:
                 print(f"ID: {i[0]} || Nome: {i[1]} || Avaliação: {i[5]}")
 
@@ -185,8 +188,7 @@ def atualizar_registro():
                 except ValueError:
                     print("O ID precisa ser um valor numérico.")
 
-            avaliacao = float(
-                input(f"\nDigite a nova avaliação do filme:\n> "))
+            avaliacao = float(input(f"\nDigite a nova avaliação do filme:\n> "))
 
             if avaliacao != "":
                 cs.execute(f'''
@@ -194,8 +196,7 @@ def atualizar_registro():
                             ''')
                 cx.commit()
 
-                print(
-                    f"\nO filme foi atualizado com a avaliação: '{avaliacao}'\n")
+                print(f"\n\33[32mO filme foi atualizado com a avaliação: '{avaliacao}'\33[0m\n")
 
             else:
                 print("\nO campo não pode estar vazio.")
@@ -204,35 +205,37 @@ def atualizar_registro():
         else:
             print("Não há filmes com esse nome")
 
+
 def deletar_registro():
     resultados = listar_filmes()
 
     if resultados != []:
+        print()
         for i in resultados:
-            print(
-                f"ID: {i[0]} || Nome: {i[1]} || Genero: {i[2]} || Duração: {i[3]}")
+            print(f"ID: {i[0]} || Nome: {i[1]} || Genero: {i[2]} || Duração: {i[3]}")
 
-            id = ""
-            while id == "":
-                try:
-                    id = int(input("\nConfirme o ID do filme que quer DELETAR:\n> "))
-                except ValueError:
-                    print("O ID precisa ser um valor numérico.")
+        id = ""
+        while id == "":
+            try:
+                id = int(input("\nConfirme o ID do filme que quer DELETAR:\n> "))
+            except ValueError:
+                print("O ID precisa ser um valor numérico.")
 
     cs.execute(f'''
             delete from Filmes where Id = {id}
             ''')
     cx.commit()
 
-    print("\nRegistro excluido com sucesso.\n")
+    print("\n\33[31mRegistro excluido com sucesso.\33[0m\n")
+
 
 def listar_filmes():
-    nome = input("\nDigite o nome do filme para listar: (digite 'todos' para listar todos)\n> ").title()
+    nome = input("\nDigite o nome do filme para listar: (digite '*' para listar todos)\n> ").title()
     if nome == "" or nome.isspace() == True:
         print("\nDigite um nome válido.\n")
         return
     else:
-        if nome == 'Todos':
+        if nome == '*':
             cs.execute(f'''
                     select * from Filmes
                     ''')
@@ -244,6 +247,7 @@ def listar_filmes():
                     ''')
             cx.commit()
             return cs.fetchall()
+
 
 ##########################################
 #                CÓDIGO
@@ -266,14 +270,16 @@ while menu != "6":
         resultados = listar_filmes()
         try:
             if resultados != []:
+                print()
                 for i in resultados:
                     print(
                         f"ID: {i[0]} || Nome: {i[1]} || Genero: {i[2]} || Duração: {i[3]}")
+                print()
             else:
                 print("Não há filmes com esse nome")
         except Exception as e:
             print("Erro ao procurar filme.\n")
-            
+
     if menu == "3":
         adicionar_registro()
     if menu == "4":
@@ -281,4 +287,4 @@ while menu != "6":
     if menu == "5":
         deletar_registro()
     if menu == "6":
-        print("Fechando programa..............................")
+        print("Fechando programa......................")
