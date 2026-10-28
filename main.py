@@ -7,6 +7,15 @@ menu = "0"
 #            Funções
 ##################################
 
+def checar_id(id):
+    cs.execute(f'''
+               SELECT Id FROM Filmes WHERE Id = {id}
+               ''')
+    resultado = cs.fetchone()
+    if resultado:
+        return True
+    else:
+        return False
 
 def criar_banco():
     cs.execute(f'''
@@ -90,6 +99,8 @@ def atualizar_registro():
                 except ValueError:
                     print("O ID precisa ser um valor numérico.")
 
+            checar_id()
+            
             genero = input(f"\nDigite o novo gênero do filme:\n> ").capitalize()
 
             if genero != "":
@@ -105,7 +116,7 @@ def atualizar_registro():
                 print("\nO campo não pode estar vazio.")
                 atualizar_registro()
         else:
-            print("Não há filmes com esse nome")
+            print("\nNão há filmes com esse nome\n")
 
     if menu_interno == '2':
         resultados = listar_filmes()
@@ -137,7 +148,7 @@ def atualizar_registro():
                 atualizar_registro()
 
         else:
-            print("Não há filmes com esse nome")
+            print("\nNão há filmes com esse nome\n")
 
     if menu_interno == '3':
         resultados = listar_filmes()
@@ -171,7 +182,7 @@ def atualizar_registro():
                 atualizar_registro()
 
         else:
-            print("Não há filmes com esse nome")
+            print("\nNão há filmes com esse nome\n")
 
     if menu_interno == '4':
         resultados = listar_filmes()
@@ -203,7 +214,7 @@ def atualizar_registro():
                 atualizar_registro()
 
         else:
-            print("Não há filmes com esse nome")
+            print("\nNão há filmes com esse nome\n")
 
 
 def deletar_registro():
@@ -219,7 +230,7 @@ def deletar_registro():
             try:
                 id = int(input("\nConfirme o ID do filme que quer DELETAR:\n> "))
             except ValueError:
-                print("O ID precisa ser um valor numérico.")
+                print("\nO ID precisa ser um valor numérico.\n")
 
     cs.execute(f'''
             delete from Filmes where Id = {id}
@@ -230,12 +241,12 @@ def deletar_registro():
 
 
 def listar_filmes():
-    nome = input("\nDigite o nome do filme para listar: (digite '*' para listar todos)\n> ").title()
+    nome = input("\nDigite o nome do filme para listar: (digite '/' para listar todos)\n> ").title()
     if nome == "" or nome.isspace() == True:
-        print("\nDigite um nome válido.\n")
+        print("\nDigite um nome válido.")
         return
     else:
-        if nome == '*':
+        if nome == '/':
             cs.execute(f'''
                     select * from Filmes
                     ''')
@@ -276,7 +287,7 @@ while menu != "6":
                         f"ID: {i[0]} || Nome: {i[1]} || Genero: {i[2]} || Duração: {i[3]}")
                 print()
             else:
-                print("Não há filmes com esse nome")
+                print("\nNão há filmes com esse nome.\n")
         except Exception as e:
             print("Erro ao procurar filme.\n")
 
